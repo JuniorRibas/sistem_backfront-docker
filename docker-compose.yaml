@@ -1,0 +1,28 @@
+version: "3"
+
+services:
+  backend:
+    build: ./backend
+    entrypoint: sh -c "yarn && yarn start"
+    ports:
+      - 3333:3333
+    volumes:
+      - ./backend:/home/node/app 
+
+  front:
+    build: ./front
+    ports:
+      - 3000:80
+    volumes:
+      - ./front:/app 
+
+  pg:
+    image: postgres
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data
+    ports:
+      - "15432:5432"
+    environment:
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: 1234
+      POSTGRES_DB: "sistem"
